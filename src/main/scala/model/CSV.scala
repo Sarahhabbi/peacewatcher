@@ -1,4 +1,5 @@
 package model
+
 import java.nio.file.{Files, Path}
 import scala.jdk.CollectionConverters.IteratorHasAsScala
 import java.io.File
@@ -17,6 +18,5 @@ object CSV {
 
     val (parsedLine, invalidLine) = line.partition(line => line.isDefined)
     ReadResult(parsedLine.flatten, invalidLine.size)
-
   }
 }

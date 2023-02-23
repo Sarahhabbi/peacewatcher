@@ -1,19 +1,21 @@
 package model
+import java.util.concurrent.atomic.AtomicInteger
+import scala.util.Random
 
-class Model {
-  case class PeaceWatcherReport(id: Int, location: (Double, Double), citizens: List[Citizen], wordsHeard: List[String]) {
-    def triggerAlert: Option[(Int, (Double, Double), String)] = {
-      val agitatedCitizen = citizens.find(_.peaceScore < 0)
-      agitatedCitizen match {
-        case Some(c) => Some((id, location, c.name))
-        case None => None
-      }
+object Model{
+  def main(args: Array[String]):Unit = {
+    val counter = new AtomicInteger(0)
+    val citizenList: List[Citizen] = CSV.read("src/main/scala/data/liste_des_prenoms.csv", Citizen.parseCitizen).lines.toList
+
+    def creationReport(): Option[Report] = {
+      val id = counter.incrementAndGet()
+      val longitude = 48 + Random.nextDouble()
+      val latitude = 2 + Random.nextDouble()
+      val nameCitizen = Random.shuffle(citizenList).head
+      val wordHeard = "Hello"
+      Some(Report(id, longitude, latitude, nameCitizen, wordHeard))
     }
+
+    println(citizenList)
   }
-
-  // EXEMPLE
-  case class Citizen(name: String, peaceScore: Double)
-
-  val report1 = PeaceWatcherReport(1, (45.50, -73.58), List(Citizen("John Doe", 0.8), Citizen("Jane Doe", -0.2)), List("loud argument", "angry tone"))
-  val report2 = PeaceWatcherReport(2, (37.77, -122.42), List(Citizen("Jane Smith", 0.6), Citizen("John Smith", 0.9)), List("happy laughter", "calm tone"))
 }
