@@ -1,7 +1,5 @@
 package model
 
-import java.nio.file.{Files, Path}
-import scala.jdk.CollectionConverters.IteratorHasAsScala
 import java.io.File
 import scala.io.Source
 
@@ -12,7 +10,7 @@ object CSV {
     val line = Source.fromFile(new File(fileName))
       .getLines()
       .drop(1)
-      .map(line => line.split(",")
+      .map(line => line.split(";")
         .map(_.trim))
       .map(parseLine)
 
