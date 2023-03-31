@@ -4,10 +4,10 @@
 *.iml
 *.ipr
 *.iws
-.idea
+.idea/*
 
 
 # sbt
-project/project/
-project/target/
-target/
+project/project/*
+project/target/*
+target/*
