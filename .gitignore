@@ -1,2 +1,14 @@
 *.class
 *.log
+
+*.log
+*.iml
+*.ipr
+*.iws
+.idea
+
+
+# sbt
+project/project/
+project/target/
+target/
