@@ -1,7 +1,8 @@
 package app
-import java.util.concurrent.{Executors, TimeUnit}
-import kafka.ReportProducer
+import kafka.{ReportConsumer, ReportProducer}
 import model.Report
+
+import java.util.concurrent.{Executors, TimeUnit}
 
 object PeaceWatcherApp extends App {
   val reportProducer = new ReportProducer()
@@ -12,9 +13,13 @@ object PeaceWatcherApp extends App {
       val report = Report.creationReport()
       reportProducer.writeReport(report)
     }
-  }, 0, 5, TimeUnit.SECONDS)
+  }, 0, 10, TimeUnit.SECONDS)
 
-  // Attendez 1 minute avant de terminer le programme
+
+  val reportConsumer = new ReportConsumer()
+  val consumerThread = new Thread(() => reportConsumer.consumeReports())
+  consumerThread.start()
+
   Thread.sleep(30000)
   scheduler.shutdown()
   reportProducer.producer.close()
