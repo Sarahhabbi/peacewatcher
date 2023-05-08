@@ -15,6 +15,7 @@ object Report {
   val counterFile = new File("src/main/scala/data/report_counter.txt")
   val counter = readCounter()
 
+  val words = Source.fromFile("src/main/scala/data/words.txt", "ISO-8859-1").getLines().toList
   val citizenList: List[Citizen] = CSV.read("src/main/scala/data/liste_des_prenoms.csv", Citizen.parseCitizen).lines.toList
 
   def creationReport(): Report = {
@@ -22,7 +23,7 @@ object Report {
     val longitude = 48 + Random.nextDouble()
     val latitude = 2 + Random.nextDouble()
     val nameCitizen = Random.shuffle(citizenList).head
-    val wordHeard = "Hello"
+    val wordHeard = Random.shuffle((words)).head
     val report = Report(id, longitude, latitude, nameCitizen, wordHeard)
     writeCounter()
     report
