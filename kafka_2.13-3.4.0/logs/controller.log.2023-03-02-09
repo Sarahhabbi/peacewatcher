@@ -1,0 +1,5 @@
+[2023-03-02 09:25:46,549] INFO [Controller 1] Fencing broker 1 because its session has timed out. (org.apache.kafka.controller.ReplicationControlManager)
+[2023-03-02 09:25:47,763] INFO [Controller 1] handleBrokerFenced: changing 56 partition(s) (org.apache.kafka.controller.ReplicationControlManager)
+[2023-03-02 09:25:47,813] ERROR [Controller 1] processBrokerHeartbeat: unable to start processing because of TimeoutException. (org.apache.kafka.controller.QuorumController)
+[2023-03-02 09:25:48,342] INFO [Controller 1] The request from broker 1 to unfence has been granted because it has caught up with the offset of it's register broker record 3. (org.apache.kafka.controller.BrokerHeartbeatManager)
+[2023-03-02 09:25:48,357] INFO [Controller 1] handleBrokerUnfenced: changing 56 partition(s) (org.apache.kafka.controller.ReplicationControlManager)
