@@ -1,6 +1,6 @@
 package app
 import kafka.{ReportConsumer, ReportProducer}
-import model.Report
+import model.{Report, Alert}
 
 import java.util.concurrent.{Executors, TimeUnit}
 
@@ -11,6 +11,8 @@ object PeaceWatcherApp extends App {
   scheduler.scheduleAtFixedRate(new Runnable {
     def run() = {
       val report = Report.creationReport()
+      val alerts:List[Alert] = report.analyzeReport()
+      alertProducer.writeAlerts(alerts)
       reportProducer.writeReport(report)
     }
   }, 0, 10, TimeUnit.SECONDS)

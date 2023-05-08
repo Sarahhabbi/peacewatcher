@@ -7,7 +7,7 @@ case class Report(
                        id : Int,
                        longitude : Double,
                        latitude : Double,
-                       nameCitizen : Citizen,
+                       namesCitizen : Citizen,
                        wordHeard : String
                        )
 
@@ -22,11 +22,16 @@ object Report {
     val id = counter.incrementAndGet()
     val longitude = 48 + Random.nextDouble()
     val latitude = 2 + Random.nextDouble()
-    val nameCitizen = Random.shuffle(citizenList).head
+    val namesCitizen = Random.shuffle(citizenList).head
     val wordHeard = Random.shuffle((words)).head
-    val report = Report(id, longitude, latitude, nameCitizen, wordHeard)
+    val report = Report(id, longitude, latitude, namesCitizen, wordHeard)
     writeCounter()
     report
+  }
+
+  def analyzeReport(report: Report): List[Alert] = {
+    report.namesCitizen.filter(_.peaceScore < 50)
+      .map(citizen => Alert(report.latitude, report.longitude, citizen.name, citizen.peaceScore))
   }
 
   def readCounter(): AtomicInteger = {

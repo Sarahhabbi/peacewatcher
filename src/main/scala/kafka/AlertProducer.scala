@@ -1,0 +1,21 @@
+package kafka
+
+import java.util.Properties
+
+import org.apache.kafka.clients.producer.{KafkaProducer, ProducerRecord}
+
+class AlertProducer {
+  val props = new Properties()
+  props.put("bootstrap.servers", "localhost:9092")
+  props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer")
+  props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer")
+
+  val producer = new KafkaProducer[String, String](props)
+
+  def writeAlerts(alerts: List[Alert]): Unit = {
+    alerts.map(alert =>{
+      val record = new ProducerRecord[String, String]("alerts", alert)
+      producer.send(record)
+    })
+  }
+}
