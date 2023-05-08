@@ -1,6 +1,8 @@
 package model
 import java.util.concurrent.atomic.AtomicInteger
 import scala.util.Random
+import scala.io.Source
+import java.io.{File, PrintWriter}
 case class Report(
                        id : Int,
                        longitude : Double,
@@ -9,15 +11,35 @@ case class Report(
                        wordHeard : String
                        )
 
-object Report{
-  val counter = new AtomicInteger(0)
+object Report {
+  val counterFile = new File("src/main/scala/data/report_counter.txt")
+  val counter = readCounter()
+
   val citizenList: List[Citizen] = CSV.read("src/main/scala/data/liste_des_prenoms.csv", Citizen.parseCitizen).lines.toList
+
   def creationReport(): Report = {
     val id = counter.incrementAndGet()
     val longitude = 48 + Random.nextDouble()
     val latitude = 2 + Random.nextDouble()
     val nameCitizen = Random.shuffle(citizenList).head
     val wordHeard = "Hello"
-    Report(id, longitude, latitude, nameCitizen, wordHeard)
+    val report = Report(id, longitude, latitude, nameCitizen, wordHeard)
+    writeCounter()
+    report
+  }
+
+  def readCounter(): AtomicInteger = {
+    if (counterFile.exists()) {
+      val content = Source.fromFile(counterFile).mkString.trim
+      new AtomicInteger(content.toInt)
+    } else {
+      new AtomicInteger(0)
+    }
+  }
+
+  def writeCounter(): Unit = {
+    val writer = new PrintWriter(counterFile)
+    writer.println(counter.get())
+    writer.close()
   }
 }
