@@ -14,7 +14,7 @@ class AlertProducer {
   props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer")
 */
   val props = new Properties()
-  props.load(new java.io.FileInputStream("./producer_client.properties"))
+  props.load(new java.io.FileInputStream("./alert_producer_client.properties"))
 
   val producer = new KafkaProducer[String, String](props)
   implicit val formats: AnyRef with Formats = Serialization.formats(NoTypeHints)
