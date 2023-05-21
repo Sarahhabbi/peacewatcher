@@ -1,20 +1,24 @@
 package kafka
 
 import model.Report
-import java.util.Properties
 import org.apache.kafka.clients.consumer.{ConsumerConfig, KafkaConsumer}
-import org.apache.kafka.common.serialization.StringDeserializer
 import org.json4s.native.Serialization
-import org.json4s.{Formats, NoTypeHints}
 import org.json4s.native.Serialization.read
+import org.json4s.{Formats, NoTypeHints}
 
+import java.util.Properties
 import scala.collection.JavaConverters._
 
 class ReportConsumer {
-  val props = new Properties()
+  /*val props = new Properties()
   props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092")
   props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, classOf[StringDeserializer].getName)
   props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, classOf[StringDeserializer].getName)
+  props.put(ConsumerConfig.GROUP_ID_CONFIG, "report-consumer-group")
+  props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest")*/
+
+  val props = new Properties()
+  props.load(new java.io.FileInputStream("./consumer_client.properties"))
   props.put(ConsumerConfig.GROUP_ID_CONFIG, "report-consumer-group")
   props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest")
 
@@ -28,7 +32,7 @@ class ReportConsumer {
       for (record <- records.asScala) {
         val jsonString = record.value()
         val report = read[Report](jsonString)
-        println(report)
+        println(s"Consumed report : ${report}")
       }
     }
   }

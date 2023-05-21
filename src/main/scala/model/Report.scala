@@ -3,13 +3,15 @@ import java.util.concurrent.atomic.AtomicInteger
 import scala.util.Random
 import scala.io.Source
 import java.io.{File, PrintWriter}
+import java.time.LocalDate
 case class Report(
                        id : Int,
                        longitude : Double,
                        latitude : Double,
-                       namesCitizen : Citizen,
+                       namesCitizen : List[Citizen],
                        wordHeard : String
-                       )
+                       ) {
+}
 
 object Report {
   val counterFile = new File("src/main/scala/data/report_counter.txt")
@@ -22,7 +24,7 @@ object Report {
     val id = counter.incrementAndGet()
     val longitude = 48 + Random.nextDouble()
     val latitude = 2 + Random.nextDouble()
-    val namesCitizen = Random.shuffle(citizenList).head
+    val namesCitizen = Random.shuffle(citizenList).take(10)
     val wordHeard = Random.shuffle((words)).head
     val report = Report(id, longitude, latitude, namesCitizen, wordHeard)
     writeCounter()
@@ -30,8 +32,10 @@ object Report {
   }
 
   def analyzeReport(report: Report): List[Alert] = {
+    val currentDate: LocalDate = LocalDate.now()
+    println(s"currentDate: ${currentDate}")
     report.namesCitizen.filter(_.peaceScore < 50)
-      .map(citizen => Alert(report.latitude, report.longitude, citizen.name, citizen.peaceScore))
+      .map(citizen => Alert(report.latitude, report.longitude, citizen.name, citizen.peaceScore, currentDate))
   }
 
   def readCounter(): AtomicInteger = {
