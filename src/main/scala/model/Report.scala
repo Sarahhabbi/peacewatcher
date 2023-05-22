@@ -4,6 +4,7 @@ import scala.util.Random
 import scala.io.Source
 import java.io.{File, PrintWriter}
 import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 case class Report(
                        id : Int,
                        longitude : Double,
@@ -32,10 +33,12 @@ object Report {
   }
 
   def analyzeReport(report: Report): List[Alert] = {
-    val currentDate: LocalDate = LocalDate.now()
-    println(s"currentDate: ${currentDate}")
+    val dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+    val currentDate = LocalDate.now()
+    val dateString = currentDate.format(dateFormatter)
+
     report.namesCitizen.filter(_.peaceScore < 50)
-      .map(citizen => Alert(report.latitude, report.longitude, citizen.name, citizen.peaceScore, currentDate))
+      .map(citizen => Alert(report.latitude, report.longitude, citizen.name, citizen.peaceScore, dateString))
   }
 
   def readCounter(): AtomicInteger = {

@@ -23,6 +23,7 @@ class AlertProducer {
     alerts.map(alert =>{
       val jsonString = write(alert)
       val record = new ProducerRecord[String, String]("alerts", jsonString)
+      println("Sending data to alert topic")
       producer.send(record)
     })
   }

@@ -23,7 +23,7 @@ class ReportProducer {
     val jsonString = write(report)
 
     val record = new ProducerRecord[String, String]("reports", jsonString)
-    println("sending data to topic reports")
+    println("Sending data to topic reports")
     producer.send(record)
   }
 }
