@@ -11,15 +11,24 @@ object PeaceWatcherApp extends App {
   val scheduler = Executors.newScheduledThreadPool(1)
   scheduler.scheduleAtFixedRate(new Runnable {
     def run(): Unit = {
+      println("-----------------")
       val report = Report.creationReport()
       val alerts: List[Alert] = Report.analyzeReport(report)
+      println(s"Writing alerts if needed: ${alerts}")
       alerts match {
         case Nil => println("No alert to write.")
         case _ => alertProducer.writeAlerts(alerts)
       }
-      println("Writing reports")
-      println(alerts)
+      println(">>> Alerts written!")
+      println(s"Writing report: ${report.id}")
       reportProducer.writeReport(report)
+      println(">>> Report written!")
+      println("-----------------")
     }
   }, 0, 10, TimeUnit.SECONDS)
+
+  scheduler.awaitTermination(1, TimeUnit.HOURS)
+  scheduler.shutdown()
+
+  reportProducer.producer.close()
 }
