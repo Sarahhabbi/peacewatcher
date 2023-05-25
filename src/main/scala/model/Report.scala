@@ -9,7 +9,8 @@ case class Report(
                        id : Int,
                        longitude : Double,
                        latitude : Double,
-                       namesCitizen : List[Citizen],
+                       nameCitizen : String,
+                       peaceScore : Int,
                        wordHeard : String
                        ) {
 }
@@ -19,26 +20,28 @@ object Report {
   val counter = readCounter()
 
   val words = Source.fromFile("src/main/scala/data/words.txt", "ISO-8859-1").getLines().toList
-  val citizenList: List[Citizen] = CSV.read("src/main/scala/data/liste_des_prenoms.csv", Citizen.parseCitizen).lines.toList
+  val citizenList = Source.fromFile("src/main/scala/data/names.txt", "ISO-8859-1").getLines().toList
 
   def creationReport(): Report = {
     val id = counter.incrementAndGet()
     val longitude = 48 + Random.nextDouble()
     val latitude = 2 + Random.nextDouble()
-    val namesCitizen = Random.shuffle(citizenList).take(10)
-    val wordHeard = Random.shuffle((words)).head
-    val report = Report(id, longitude, latitude, namesCitizen, wordHeard)
+    val nameCitizen = Random.shuffle(citizenList).head
+    val peaceScore = Random.nextInt(101)
+    val wordHeard = Random.shuffle(words).head
+    val report = Report(id, longitude, latitude, nameCitizen, peaceScore, wordHeard)
     writeCounter()
     report
   }
 
-  def analyzeReport(report: Report): List[Alert] = {
+  def analyzeReport(report: Report): Option[Alert] = {
     val dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
     val currentDate = LocalDate.now()
     val dateString = currentDate.format(dateFormatter)
-
-    report.namesCitizen.filter(_.peaceScore < 50)
-      .map(citizen => Alert(report.latitude, report.longitude, citizen.name, citizen.peaceScore, dateString))
+    report.peaceScore match{
+      case x if x < 50 => Some(Alert(report.latitude, report.longitude, report.nameCitizen, report.peaceScore, report.wordHeard, dateString))
+      case _ => None
+    }
   }
 
   def readCounter(): AtomicInteger = {

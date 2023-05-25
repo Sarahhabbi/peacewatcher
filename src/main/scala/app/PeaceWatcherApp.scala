@@ -13,11 +13,11 @@ object PeaceWatcherApp extends App {
     def run(): Unit = {
       println("-----------------")
       val report = Report.creationReport()
-      val alerts: List[Alert] = Report.analyzeReport(report)
-      println(s"Writing alerts if needed: ${alerts}")
-      alerts match {
-        case Nil => println("No alert to write.")
-        case _ => alertProducer.writeAlerts(alerts)
+      val alert: Option[Alert] = Report.analyzeReport(report)
+      println(s"Writing alerts if needed: ${alert}")
+      alert match {
+        case None => println("No alert to write.")
+        case _ => alertProducer.writeAlert(alert)
       }
       println(">>> Alerts written!")
       println(s"Writing report: ${report.id}")

@@ -19,12 +19,10 @@ class AlertProducer {
   val producer = new KafkaProducer[String, String](props)
   implicit val formats: AnyRef with Formats = Serialization.formats(NoTypeHints)
 
-  def writeAlerts(alerts: List[Alert]): Unit = {
-    alerts.map(alert =>{
+  def writeAlert(alert: Option[Alert]): Unit = {
       val jsonString = write(alert)
       val record = new ProducerRecord[String, String]("alerts", jsonString)
       println("Sending data to alert topic")
       producer.send(record)
-    })
   }
 }
