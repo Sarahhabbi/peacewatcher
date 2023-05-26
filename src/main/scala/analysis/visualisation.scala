@@ -5,7 +5,7 @@ import org.apache.spark.sql.{DataFrame, SparkSession}
 
 
 
-class Visualisation {
+class visualisation {
 
   def readBlobJsonToDataFrame(storageAccountName: String, storageAccountKey: String, containerName: String, blobName: String): DataFrame = {
     val storageConnectionString = s"DefaultEndpointsProtocol=https;AccountName=$storageAccountName;AccountKey=$storageAccountKey;EndpointSuffix=core.windows.net"
@@ -28,14 +28,18 @@ class Visualisation {
     df
   }
 
-
-  val storageAccountName = "peacewatcher"
-  val storageAccountKey = "vvhaz7qpOLYy4E3SGKnj7STJmR2oId9jm6nkUSHgJYsNQ8I0WvGvld50Rir/EvUfJTLERVLesYdR+AStKXA5Rg=="
-  val containerName = "peacewatcher"
-  val blobName = "topics/alerts/year=2023/month=05/day=21/hour=20/alerts+1+0000000418.json"
+  val storageAccountName = "peacestate"
+  val storageAccountKey = "8FLbdOXTCFgFqdd45L8xUEn5d1XHTMwuDkxu2lqCL9cJdSHVhHJuYKJjBFBZmztLhMIdZL9t6sze+AStSz79kw=="
+  val containerName = "peacestate"
+  val blobName = "topics/alerts/year=2023/alerts+0+0000002572.json"
 
   val df = readBlobJsonToDataFrame(storageAccountName, storageAccountKey, containerName, blobName)
 
   df.show()
-
 }
+
+
+
+
+
+
