@@ -2,9 +2,9 @@ import org.apache.spark.sql.{DataFrame, SparkSession}
 
 object Visualisation extends App {
 
-  def readBlobJsonToDataFrame(storageAccountName: String, storageAccountKey: String, containerName: String, blobPrefix: String): DataFrame = {
-
-    val sparkMaster = "local[*]" // Mode d'exécution local avec utilisation maximale des cœurs disponibles
+  def readBlobJsonToDataFrame(): DataFrame = {
+    val storageAccountKey = "8FLbdOXTCFgFqdd45L8xUEn5d1XHTMwuDkxu2lqCL9cJdSHVhHJuYKJjBFBZmztLhMIdZL9t6sze+AStSz79kw=="
+    val sparkMaster = "local[*]"
     val spark = SparkSession.builder()
       .appName("Lecture des données depuis Azure Blob Storage")
       .master(sparkMaster)
@@ -17,12 +17,8 @@ object Visualisation extends App {
     df
   }
 
-  val storageAccountName = "peacestate"
-  val storageAccountKey = "8FLbdOXTCFgFqdd45L8xUEn5d1XHTMwuDkxu2lqCL9cJdSHVhHJuYKJjBFBZmztLhMIdZL9t6sze+AStSz79kw=="
-  val containerName = "peacestate"
-  val blobName = "topics/alerts/year=2023/"
-
-  val df = readBlobJsonToDataFrame(storageAccountName, storageAccountKey, containerName, blobName)
+  val df = readBlobJsonToDataFrame()
 
   df.show()
+  println(df.count())
 }
