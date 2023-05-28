@@ -27,7 +27,7 @@ object PeaceWatcherApp extends App {
     }
   }, 0, 10, TimeUnit.SECONDS)
 
-  scheduler.awaitTermination(1, TimeUnit.HOURS)
+  scheduler.awaitTermination(5, TimeUnit.HOURS)
   scheduler.shutdown()
 
   reportProducer.producer.close()
