@@ -18,7 +18,6 @@ case class Report(
 object Report {
   val counterFile = new File("src/main/scala/data/report_counter.txt")
   val counter = readCounter()
-
   val words = Source.fromFile("src/main/scala/data/words.txt", "ISO-8859-1").getLines().toList
   val citizenList = Source.fromFile("src/main/scala/data/names.txt", "ISO-8859-1").getLines().toList
 

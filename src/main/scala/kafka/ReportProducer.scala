@@ -8,11 +8,6 @@ import org.json4s.native.Serialization
 import org.json4s.native.Serialization.write
 
 class ReportProducer {
-  /*val props = new Properties()
-  props.put("bootstrap.servers", "localhost:9092")
-  props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer")
-  props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer")*/
-
   val props = new Properties()
   props.load(new java.io.FileInputStream("./report_producer_client.properties"))
 

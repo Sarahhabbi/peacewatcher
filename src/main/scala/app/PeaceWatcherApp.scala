@@ -1,4 +1,3 @@
-package app
 import kafka.{AlertProducer, ReportProducer}
 import model.{Alert, Report}
 
@@ -14,12 +13,14 @@ object PeaceWatcherApp extends App {
       println("-----------------")
       val report = Report.creationReport()
       val alert: Option[Alert] = Report.analyzeReport(report)
-      println(s"Writing alerts if needed: ${alert}")
+
       alert match {
         case None => println("No alert to write.")
-        case _ => alertProducer.writeAlert(alert)
+        case _ => {
+          println(s"💢New alert detected !💢")
+          alertProducer.writeAlert(alert)
+        }
       }
-      println(">>> Alerts written!")
       println(s"Writing report: ${report.id}")
       reportProducer.writeReport(report)
       println(">>> Report written!")
@@ -27,8 +28,7 @@ object PeaceWatcherApp extends App {
     }
   }, 0, 10, TimeUnit.SECONDS)
 
-  scheduler.awaitTermination(1, TimeUnit.HOURS)
-  scheduler.shutdown()
-
-  reportProducer.producer.close()
+  while (true) {
+    Thread.sleep(1000)
+  }
 }
