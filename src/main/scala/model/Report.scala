@@ -1,18 +1,18 @@
 package model
-import java.util.concurrent.atomic.AtomicInteger
-import scala.util.Random
-import scala.io.Source
 import java.io.{File, PrintWriter}
+import java.util.concurrent.atomic.AtomicInteger
+import scala.io.Source
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+import scala.util.Random
 case class Report(
-                       id : Int,
-                       longitude : Double,
-                       latitude : Double,
-                       nameCitizen : String,
-                       peaceScore : Int,
-                       wordHeard : String
-                       ) {
+                   id : Int,
+                   longitude : Double,
+                   latitude : Double,
+                   nameCitizen : String,
+                   peaceScore : Int,
+                   wordHeard : String
+                 ) {
 }
 
 object Report {
@@ -22,6 +22,13 @@ object Report {
   val words = Source.fromFile("src/main/scala/data/words.txt", "ISO-8859-1").getLines().toList
   val citizenList = Source.fromFile("src/main/scala/data/names.txt", "ISO-8859-1").getLines().toList
 
+  def generateRandomDate(): String = {
+    val currentDate = LocalDate.now()
+    val randomDays = Random.nextInt(90)
+    val randomDate = currentDate.minusDays(randomDays)
+    val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
+    randomDate.format(formatter)
+  }
   def creationReport(): Report = {
     val id = counter.incrementAndGet()
     val longitude = 48 + Random.nextDouble()
@@ -35,9 +42,7 @@ object Report {
   }
 
   def analyzeReport(report: Report): Option[Alert] = {
-    val dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-    val currentDate = LocalDate.now()
-    val dateString = currentDate.format(dateFormatter)
+    val dateString = generateRandomDate()
     report.peaceScore match{
       case x if x < 50 => Some(Alert(report.latitude, report.longitude, report.nameCitizen, report.peaceScore, report.wordHeard, dateString))
       case _ => None

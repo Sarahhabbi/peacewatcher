@@ -1,4 +1,0 @@
-[2023-02-28 22:12:31,175] INFO [Controller 1] Fencing broker 1 because its session has timed out. (org.apache.kafka.controller.ReplicationControlManager)
-[2023-02-28 22:12:31,535] INFO [Controller 1] handleBrokerFenced: changing 56 partition(s) (org.apache.kafka.controller.ReplicationControlManager)
-[2023-02-28 22:12:31,727] INFO [Controller 1] The request from broker 1 to unfence has been granted because it has caught up with the offset of it's register broker record 3. (org.apache.kafka.controller.BrokerHeartbeatManager)
-[2023-02-28 22:12:31,728] INFO [Controller 1] handleBrokerUnfenced: changing 56 partition(s) (org.apache.kafka.controller.ReplicationControlManager)

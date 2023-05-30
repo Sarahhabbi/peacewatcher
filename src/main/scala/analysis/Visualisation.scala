@@ -5,7 +5,7 @@ import org.apache.spark.sql.{DataFrame, SparkSession}
 
 
 
-class visualisation {
+class Visualisation {
 
   def readBlobJsonToDataFrame(storageAccountName: String, storageAccountKey: String, containerName: String, blobName: String): DataFrame = {
     val storageConnectionString = s"DefaultEndpointsProtocol=https;AccountName=$storageAccountName;AccountKey=$storageAccountKey;EndpointSuffix=core.windows.net"

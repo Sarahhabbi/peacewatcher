@@ -1,3 +1,0 @@
-[2023-02-26 22:00:42,633] INFO [Controller 1] CreateTopics result(s): CreatableTopic(name='mytopicKafka1', numPartitions=1, replicationFactor=1, assignments=[], configs=[]): SUCCESS (org.apache.kafka.controller.ReplicationControlManager)
-[2023-02-26 22:00:42,634] INFO [Controller 1] Created topic mytopicKafka1 with topic ID yyICuXxxR9Sc-gJ0P7SsmQ. (org.apache.kafka.controller.ReplicationControlManager)
-[2023-02-26 22:00:42,634] INFO [Controller 1] Created partition mytopicKafka1-0 with topic ID yyICuXxxR9Sc-gJ0P7SsmQ and PartitionRegistration(replicas=[1], isr=[1], removingReplicas=[], addingReplicas=[], leader=1, leaderRecoveryState=RECOVERED, leaderEpoch=0, partitionEpoch=0). (org.apache.kafka.controller.ReplicationControlManager)

@@ -1,3 +1,0 @@
-[2023-02-26 22:00:42,664] INFO [Broker id=1] Transitioning 1 partition(s) to local leaders. (state.change.logger)
-[2023-02-26 22:00:42,669] INFO [Broker id=1] Creating new partition mytopicKafka1-0 with topic id yyICuXxxR9Sc-gJ0P7SsmQ. (state.change.logger)
-[2023-02-26 22:00:42,680] INFO [Broker id=1] Leader mytopicKafka1-0 with topic id Some(yyICuXxxR9Sc-gJ0P7SsmQ) starts at leader epoch 0 from offset 0 with partition epoch 0, high watermark 0, ISR [1], adding replicas [] and removing replicas []. Previous leader epoch was -1. (state.change.logger)
